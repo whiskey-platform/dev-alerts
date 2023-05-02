@@ -1,0 +1,25 @@
+{
+  "name": "whiskeylerts-ingest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.72.1-alpha.0",
+    "@tsconfig/node16": "^1.0.3",
+    "aws-cdk-lib": "2.72.1",
+    "constructs": "10.1.156",
+    "sst": "2.7.2",
+    "typescript": "^5.0.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
