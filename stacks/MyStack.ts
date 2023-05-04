@@ -7,6 +7,7 @@ import {
 } from 'sst/constructs';
 import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { DomainName } from '@aws-cdk/aws-apigatewayv2-alpha';
+import { Tags } from 'aws-cdk-lib';
 
 export function API({ stack, app }: StackContext) {
   const receivedWebhooksTable = new Table(stack, 'ReceivedWebhooksTable', {
@@ -56,6 +57,10 @@ export function API({ stack, app }: StackContext) {
   api.bind([receivedWebhooksTable]);
   api.bindToRoute('POST /github', [GITHUB_SECRET_TOKEN]);
   api.bindToRoute('POST /seed', [SEED_SECRET_TOKEN]);
+
+  stack
+    .getAllFunctions()
+    .forEach((fn) => Tags.of(fn).add('lumigo:auto-trace', 'true'));
   stack.addOutputs({
     ApiEndpoint: api.url,
   });
