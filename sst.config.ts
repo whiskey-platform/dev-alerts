@@ -13,8 +13,13 @@ export default {
       runtime: 'nodejs18.x',
       nodejs: {
         esbuild: {
-          external: !app.local ? ['@aws-sdk/*'] : undefined,
+          external: !app.local
+            ? ['@aws-sdk/*', '@aws-lambda-powertools/*']
+            : undefined,
         },
+      },
+      environment: {
+        POWERTOOLS_SERVICE_NAME: 'whiskey_dev_alerts_service',
       },
     });
     app.stack(API);

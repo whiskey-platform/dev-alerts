@@ -21,6 +21,7 @@
     "@middy/http-json-body-parser": "^4.2.8",
     "@middy/http-security-headers": "^4.2.8",
     "@middy/input-output-logger": "^4.2.8",
+    "@whiskeylerts-ingest/core": "link:../core",
     "jsonwebtoken": "^9.0.0"
   }
 }

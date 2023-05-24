@@ -7,14 +7,18 @@
     "typecheck": "tsc -noEmit"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
     "@types/node": "^18.15.11",
     "sst": "2.7.2",
     "vitest": "^0.29.8"
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "^1.8.0",
+    "@aws-lambda-powertools/tracer": "^1.8.0",
     "@aws-sdk/client-dynamodb": "^3.301.0",
     "@aws-sdk/lib-dynamodb": "^3.301.0",
     "@aws-sdk/smithy-client": "^3.0.0",
-    "@aws-sdk/types": "^3.0.0"
+    "@aws-sdk/types": "^3.0.0",
+    "@middy/core": "^4.2.8"
   }
 }

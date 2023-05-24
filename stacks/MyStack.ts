@@ -7,8 +7,15 @@ import {
 } from 'sst/constructs';
 import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { DomainName } from '@aws-cdk/aws-apigatewayv2-alpha';
+import { LayerVersion } from 'aws-cdk-lib/aws-lambda';
 
 export function API({ stack, app }: StackContext) {
+  const powertools = LayerVersion.fromLayerVersionArn(
+    stack,
+    'PowertoolsLayer',
+    `arn:aws:lambda:${stack.region}:094274105915:layer:AWSLambdaPowertoolsTypeScript:11`
+  );
+
   const receivedWebhooksTable = new Table(stack, 'ReceivedWebhooksTable', {
     fields: {
       type: 'string',
@@ -52,11 +59,13 @@ export function API({ stack, app }: StackContext) {
       'POST /seed': 'packages/functions/src/webhooks/seed/function.handler',
     },
     customDomain,
+    defaults: {
+      function: {
+        bind: [receivedWebhooksTable],
+        layers: [powertools],
+      },
+    },
   });
-  api.bind([receivedWebhooksTable]);
   api.bindToRoute('POST /github', [GITHUB_SECRET_TOKEN]);
   api.bindToRoute('POST /seed', [SEED_SECRET_TOKEN]);
-  stack.addOutputs({
-    ApiEndpoint: api.url,
-  });
 }
